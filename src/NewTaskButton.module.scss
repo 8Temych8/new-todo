@@ -1,0 +1,10 @@
+.button {
+  position: fixed;
+  bottom: 20px;
+  right: calc(50% - 375px);
+}
+
+.button:hover {
+  filter: brightness(90%);
+  cursor: pointer;
+}

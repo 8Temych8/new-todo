@@ -1,0 +1,15 @@
+@import "../../styles/variables";
+
+.btn {
+  background-image: var(--bgThemeSwitchBtn);
+  border: 0;
+  width: 38px;
+  height: 38px;
+  margin: 2px 0 0 0;
+  background-color: var(--backColor);
+  cursor: pointer;
+}
+
+.btn:hover {
+  filter: brightness(0.9);
+}

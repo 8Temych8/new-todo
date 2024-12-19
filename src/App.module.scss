@@ -1,0 +1,33 @@
+@import "/src/styles/variables";
+
+.main {
+  display: flex;
+  justify-content: center;
+}
+
+h1 {
+  text-align: center;
+  color: var(--contrastColor);
+  font-family: "Kanit", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 26px;
+}
+
+.emptyContainer {
+  margin-top: 30px;
+  text-align: center;
+  color: var(--contrastColor);
+  font-family: "Kanit", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 20px;
+}
+
+.container {
+  height: 100vh;
+  width: 750px;
+  position: absolute;
+  // left: 50%;
+  // transform: translate(-50%, 0);
+}

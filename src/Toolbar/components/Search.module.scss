@@ -1,0 +1,31 @@
+@import "../../styles/variables";
+
+.search {
+  width: 580px;
+  height: 38px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--basicColor);
+  border-radius: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.search_input {
+  border: 0;
+  outline: 0;
+  width: 600px;
+  //   margin: 11px 0 11px 16px;
+  background-color: var(--backColor);
+  color: var(--contrastColor);
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 16px;
+}
+
+.svg_lupa {
+  fill: var(--contrastColor);
+}

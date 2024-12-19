@@ -1,0 +1,15 @@
+:root {
+  --basicColor: #6c63ff;
+  --backColor: #f7f7f7;
+  --contrastColor: #252525;
+  --bgThemeSwitchBtn: url("../assets/light-bg-btn.svg");
+}
+
+//Для изменения темы надо вешать аттрибут dark на root
+
+[data-theme="dark"] {
+  --basicColor: #6c63ff;
+  --backColor: #252525;
+  --contrastColor: #f7f7f7;
+  --bgThemeSwitchBtn: url("../assets/dark-bg-btn.svg");
+}

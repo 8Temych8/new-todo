@@ -1,0 +1,19 @@
+@import "../../styles/variables";
+.checkbox {
+  display: none;
+}
+
+.checkboxLabel {
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+  //   background-color: var(--backColor);
+  border: 1px solid var(--basicColor);
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.checkbox:checked + .checkboxLabel {
+  background-image: url(../../assets/checkbox.svg);
+  background-color: transparent;
+}

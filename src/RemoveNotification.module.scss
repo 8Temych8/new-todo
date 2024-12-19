@@ -1,0 +1,35 @@
+.popUp {
+  position: fixed;
+  bottom: 20px;
+  right: calc(50% - 375px);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 123px;
+  height: 38px;
+  background-color: #6c63ff;
+  border-radius: 5px;
+  transition: opacity 1s ease-out; // Плавное исчезновение
+}
+
+.popUp:hover {
+  background-color: #534cc2;
+}
+
+.fadeOut {
+  opacity: 0;
+  pointer-events: none; // Отключаем кликабельность после исчезновения
+}
+
+.undoText {
+  font-family: "Raleway", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  color: #ffffff;
+}
+
+.returnSVG {
+  margin-bottom: auto;
+  margin-top: auto;
+}
