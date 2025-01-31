@@ -1,4 +1,4 @@
-import Search from "./components/Search";
+import Search from "./components/Search/Search";
 import DropDownList from "./components/DropDownList";
 import styles from "./Toolbar.module.scss";
 

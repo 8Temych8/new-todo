@@ -1,4 +1,4 @@
-import Select from "./Select";
+import Select from "./Select/Select";
 
 interface DropDownListProps {
   onFilterChange: (filterState: string) => void;

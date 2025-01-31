@@ -1,4 +1,4 @@
-@import "../../styles/variables";
+@import "../../../../styles/variables";
 .checkbox {
   display: none;
 }
@@ -14,6 +14,6 @@
 }
 
 .checkbox:checked + .checkboxLabel {
-  background-image: url(../../assets/checkbox.svg);
+  background-image: url(../../../../assets/checkbox.svg);
   background-color: transparent;
 }

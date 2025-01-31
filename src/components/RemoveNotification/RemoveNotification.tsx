@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "./RemoveNotification.module.scss";
-import returnSVG from "./assets/return.svg";
+import returnSVG from "../../assets/return.svg";
 
 interface RemoveNotificationProps {
   isVisible: boolean;

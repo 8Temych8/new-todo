@@ -1,4 +1,4 @@
-import styles from "../components/ThemeSwitchBtn.module.scss";
+import styles from "./ThemeSwitchBtn.module.scss";
 
 interface ThemeSwitchBtnProps {
   onClick: () => void;

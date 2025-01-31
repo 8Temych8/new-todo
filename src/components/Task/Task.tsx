@@ -1,8 +1,8 @@
 import styles from "./Task.module.scss";
-import Checkbox from "./components/Checkbox";
+import Checkbox from "./components/Checkbox/Checkbox";
 import EditBtn from "./components/EditBtn";
 import RemoveBtn from "./components/RemoveBtn";
-import InputEdit from "./components/InputEdit";
+import InputEdit from "./components/InputEdit/InputEdit";
 import { useState } from "react";
 
 interface TaskProps {

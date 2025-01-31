@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "../components/Select.module.scss";
+import styles from "./Select.module.scss";
 
 interface SelectProps {
   defaultValue: string;

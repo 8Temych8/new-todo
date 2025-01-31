@@ -1,14 +1,14 @@
 import { v4 as uuidv4 } from "uuid";
 
 import styles from "./App.module.scss";
-import Task from "./Task/Task";
-import Toolbar from "./Toolbar/Toolbar";
-import ThemeSwitchBtn from "./Toolbar/components/ThemeSwitchBtn";
+import Task from "./components/Task/Task";
+import Toolbar from "./components/Toolbar/Toolbar";
+import ThemeSwitchBtn from "./components/Toolbar/components/ThemeSwitchBtn/ThemeSwitchBtn";
 import { useEffect, useState } from "react";
 import empty from "./assets/empty.png";
-import NewTaskButton from "./NewTaskButton";
-import NewTaskModal from "./NewTaskModal";
-import RemoveNotification from "./RemoveNotification";
+import NewTaskButton from "./components/NewTaskButton/NewTaskButton";
+import NewTaskModal from "./components/NewTaskModal/NewTaskModal";
+import RemoveNotification from "./components/RemoveNotification/RemoveNotification";
 
 interface TaskType {
   id: string;

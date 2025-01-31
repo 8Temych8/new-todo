@@ -1,5 +1,5 @@
 import styles from "./NewTaskButton.module.scss";
-import NewTaskSVG from "./assets/new-task.svg";
+import NewTaskSVG from "../../assets/new-task.svg";
 
 interface NewTaskButtonProps {
   openAddTaskModal: () => void;
