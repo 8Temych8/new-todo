@@ -34,14 +34,14 @@ const RemoveBtn: React.FC<RemoveBtnProps> = (props) => {
         <path
           d="M14.625 3.75H3.375"
           stroke={strokeColor}
-          stroke-linecap="round"
+          strokeLinecap="round"
         />
         <path
           d="M7.5 2.25C7.5 1.83579 7.83577 1.5 8.25 1.5H9.75C10.1642 1.5 10.5 1.83579 10.5 2.25V3.75H7.5V2.25Z"
           stroke={strokeColor}
         />
-        <path d="M10.5 9V12.75" stroke={strokeColor} stroke-linecap="round" />
-        <path d="M7.5 9V12.75" stroke={strokeColor} stroke-linecap="round" />
+        <path d="M10.5 9V12.75" stroke={strokeColor} strokeLinecap="round" />
+        <path d="M7.5 9V12.75" stroke={strokeColor} strokeLinecap="round" />
       </svg>
     </div>
   );
