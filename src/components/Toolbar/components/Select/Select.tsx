@@ -1,5 +1,7 @@
 import { useState } from "react";
 import styles from "./Select.module.scss";
+import chevronUp from "../../../../assets/chevron-up.svg";
+import chevronDown from "../../../../assets/chevron-down.svg";
 
 interface SelectProps {
   defaultValue: string;
@@ -14,6 +16,11 @@ const Select: React.FC<SelectProps> = ({
 }) => {
   const [activeSelection, setActiveSelection] = useState<string>(defaultValue);
   const [shownDropdown, setShownDropdown] = useState<boolean>(false);
+  const [chevronPath, setChevronPath] = useState(chevronDown);
+
+  const changeChevronPath = () => {
+    setChevronPath(shownDropdown ? chevronDown : chevronUp);
+  };
 
   const handleSelectionChange = (selection: string) => {
     setActiveSelection(selection);
@@ -26,9 +33,11 @@ const Select: React.FC<SelectProps> = ({
         className={styles.dropdown__button}
         onClick={() => {
           setShownDropdown(!shownDropdown);
+          changeChevronPath();
         }}
       >
         {activeSelection}
+        <img src={chevronPath} alt="" />
       </div>
       <div
         className={styles.dropdown__selections}
@@ -41,6 +50,7 @@ const Select: React.FC<SelectProps> = ({
             onClick={() => {
               handleSelectionChange(selection);
               setShownDropdown(false);
+              changeChevronPath();
             }}
           >
             {selection}
