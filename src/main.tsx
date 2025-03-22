@@ -5,12 +5,12 @@ import App from "./App.tsx";
 
 const rootEl = document.getElementById("root");
 
-if (rootEl) {
-  createRoot(rootEl).render(
-    <StrictMode>
-      <App />
-    </StrictMode>
-  );
-} else {
-  console.error("Root element is not found");
+if (!rootEl) {
+  throw new Error("Root element not found in the DOM.");
 }
+
+createRoot(rootEl).render(
+  <StrictMode>
+    <App />
+  </StrictMode>
+);

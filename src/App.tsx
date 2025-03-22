@@ -1,15 +1,14 @@
 import { v4 as uuidv4 } from "uuid";
-
 import styles from "./App.module.scss";
 import Toolbar from "./components/Toolbar/Toolbar";
 import ThemeSwitchBtn from "./components/Toolbar/components/ThemeSwitchBtn/ThemeSwitchBtn";
 import { useEffect, useState } from "react";
 import NewTaskButton from "./components/NewTaskButton/NewTaskButton";
 import NewTaskModal from "./components/NewTaskModal/NewTaskModal";
-import RemoveNotification from "./components/RemoveNotification/RemoveNotification";
 import TaskRender from "./components/TaskRender";
 import saveArray from "./utils/saveArray";
 import getArray from "./utils/getArray";
+import RemoveNotificationList from "./components/RemoveNotificationList/RemoveNotificationList";
 
 interface TaskType {
   id: string;
@@ -25,11 +24,16 @@ function App() {
   const [tasks, setTasks] = useState<TaskType[]>(
     getArray<TaskType>("Tasks") || []
   );
-  const [temporaryTasks, setTemporaryTasks] = useState<
-    TaskType[] | undefined
-  >();
+  const [removedId, setRemovedId] = useState<string[]>([]);
+  const [removedTasks, setRemovedTasks] = useState<TaskType[]>([]);
   const [filter, setFilter] = useState("All");
   const [searchQuery, setSearchQuery] = useState<string>("");
+
+  useEffect(() => {
+    setRemovedId((prev) =>
+      prev.filter((id) => removedTasks.some((task) => task.id === id))
+    );
+  }, [removedTasks]);
 
   const themeToggler = (): void => {
     setTheme(theme === "light" ? "dark" : "light");
@@ -45,9 +49,27 @@ function App() {
     saveArray("Tasks", updatedTasks);
   };
 
-  const undoRemoveTask = (): void => {
-    setTasks(temporaryTasks);
-    saveArray("Tasks", temporaryTasks);
+  const handleRemovedId = (handledId: string) => {
+    setRemovedId((prev) => {
+      if (!prev.includes(handledId)) {
+        return [...prev, handledId];
+      }
+      return prev;
+    });
+  };
+
+  const undoRemove = (id: string) => {
+    const taskToRestore = removedTasks.find((task) => task.id === id);
+    if (taskToRestore) {
+      if (!tasks.some((task) => task.id === id)) {
+        const restoredTasks = [...tasks, taskToRestore];
+        setTasks(restoredTasks);
+        saveArray("Tasks", restoredTasks);
+      }
+
+      setRemovedTasks((prev) => prev.filter((task) => task.id !== id));
+      setRemovedId((prev) => prev.filter((taskId) => taskId !== id));
+    }
   };
 
   const filterHandler = (
@@ -75,11 +97,14 @@ function App() {
         />
         <TaskRender
           filter={filter}
-          tasks={tasks}
+          tasks={tasks.filter((task) => !removedId.includes(task.id))}
           searchQuery={searchQuery}
-          setTemporaryTasks={setTemporaryTasks}
+          setRemovedId={setRemovedId}
           setTasks={setTasks}
+          setRemovedTasks={setRemovedTasks}
+          removedTasks={removedTasks}
           setStateRemoveNotification={setStateRemoveNotification}
+          handleRemovedId={handleRemovedId}
         />
 
         <NewTaskButton
@@ -87,10 +112,11 @@ function App() {
             changeStateModal();
           }}
         />
-        <RemoveNotification
-          isVisible={stateRemoveNotification}
+        <RemoveNotificationList
+          removedList={removedId}
           setIsVisible={setStateRemoveNotification}
-          undoRemove={undoRemoveTask}
+          undoRemove={undoRemove}
+          setRemovedId={setRemovedId}
         />
       </div>
       <NewTaskModal

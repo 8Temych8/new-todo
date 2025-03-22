@@ -4,13 +4,22 @@ import saveArray from "../utils/saveArray";
 import EmptyTasks from "./EmptyTasks/EmptyTasks";
 
 const TaskRender = (props) => {
-  const RemoveTask = (id: string): void => {
-    props.setTemporaryTasks(props.tasks);
+  const removeTask = (id: string) => {
+    const taskToRemove = props.tasks.find((task) => task.id === id);
+    if (taskToRemove) {
+      if (
+        props.removedTasks &&
+        !props.removedTasks.some((task) => task.id === id)
+      ) {
+        props.setRemovedTasks((prev) => [...prev, taskToRemove]);
+      }
+    }
+
     const updatedTasks = props.tasks.filter((task) => task.id !== id);
     props.setTasks(updatedTasks);
-    console.log("Task id:", id, " removed!!!");
     saveArray("Tasks", updatedTasks);
     props.setStateRemoveNotification(true);
+    props.handleRemovedId(id);
   };
 
   const editNote = (id: string, editedNote: string): void => {
@@ -18,7 +27,6 @@ const TaskRender = (props) => {
       task.id === id ? { ...task, note: editedNote } : task
     );
     props.setTasks(updatedTasks);
-    console.log("Note id:", id, " changed!!!");
     saveArray("Tasks", updatedTasks);
   };
 
@@ -27,30 +35,25 @@ const TaskRender = (props) => {
       task.id === id ? { ...task, done: !task.done } : task
     );
     props.setTasks(updatedTasks);
-    console.log("Checkbox id:", id, " changed!!!");
     saveArray("Tasks", updatedTasks);
   };
 
-  let filteredTasks = filterTasksArray(
+  const filteredTasks = filterTasksArray(
     props.filter,
     props.tasks,
     props.searchQuery
   );
 
-  if (filteredTasks.length != 0) {
+  if (filteredTasks.length !== 0) {
     return filteredTasks.map((item, index) => (
       <div key={item.id}>
         <Task
           id={item.id}
-          removeTask={() => {
-            RemoveTask(item.id);
-          }}
+          removeTask={() => removeTask(item.id)}
           editNoteFunc={editNote}
           note={item.note}
           done={item.done}
-          switchChekbox={() => {
-            switchCheckbox(item.id);
-          }}
+          switchChekbox={() => switchCheckbox(item.id)}
         />
         {index < filteredTasks.length - 1 && (
           <hr

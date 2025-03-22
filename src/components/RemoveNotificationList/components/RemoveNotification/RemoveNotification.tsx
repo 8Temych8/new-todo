@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "./RemoveNotification.module.scss";
-import returnSVG from "../../assets/return.svg";
+import returnSVG from "../../../../assets/return.svg";
 
 interface RemoveNotificationProps {
   isVisible: boolean;
@@ -30,9 +30,7 @@ const RemoveNotification: React.FC<RemoveNotificationProps> = (props) => {
 
   useEffect(() => {
     if (count > 0) {
-      const timer = setTimeout(() => {
-        setCount((prev) => prev - 1);
-      }, 1000);
+      const timer = setTimeout(() => setCount((prev) => prev - 1), 1000);
       return () => clearTimeout(timer);
     } else {
       setIsFading(true);
@@ -43,9 +41,9 @@ const RemoveNotification: React.FC<RemoveNotificationProps> = (props) => {
   }, [count]);
 
   const handleClick = () => {
+    props.undoRemove();
     props.setIsVisible(false);
     setCount(3);
-    props.undoRemove();
   };
 
   if (!props.isVisible) return null;
