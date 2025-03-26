@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import styles from "./NewTaskModal.module.scss";
+import Modal from "./components/Modal";
 
 interface NewTaskModalProps {
   isOpen: boolean;
@@ -36,37 +36,13 @@ const NewTaskModal: React.FC<NewTaskModalProps> = (props) => {
 
   if (props.isOpen)
     return (
-      <div className={styles.modal}>
-        <div className={styles.modalWindow}>
-          <h2>NEW NOTE</h2>
-          <div className={styles.inputFieldDiv}>
-            <input
-              type="text"
-              className={styles.inputFieldModal}
-              placeholder="Input your note..."
-              autoFocus
-              onKeyDown={handleKeyDown}
-              value={taskText}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className={styles.footerBtns}>
-            <div>
-              <button
-                className={styles.cancelBtn}
-                onClick={cancelButtonHandler}
-              >
-                CANCEL
-              </button>
-            </div>
-            <div>
-              <button className={styles.applyBtn} onClick={applyButtonHandler}>
-                APPLY
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Modal
+        handleKeyDown={handleKeyDown}
+        taskText={taskText}
+        handleInputChange={handleInputChange}
+        cancelButtonHandler={cancelButtonHandler}
+        applyButtonHandler={applyButtonHandler}
+      />
     );
 
   return null;

@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
 import styles from "./App.module.scss";
 import Toolbar from "./components/Toolbar/Toolbar";
 import ThemeSwitchBtn from "./components/Toolbar/components/ThemeSwitchBtn/ThemeSwitchBtn";
@@ -6,28 +5,27 @@ import { useEffect, useState } from "react";
 import NewTaskButton from "./components/NewTaskButton/NewTaskButton";
 import NewTaskModal from "./components/NewTaskModal/NewTaskModal";
 import TaskRender from "./components/TaskRender";
-import saveArray from "./utils/saveArray";
-import getArray from "./utils/getArray";
 import RemoveNotificationList from "./components/RemoveNotificationList/RemoveNotificationList";
-
-interface TaskType {
-  id: string;
-  note: string;
-  done: boolean;
-}
+import { useTasks } from "./hooks/useTasks";
+import { useFilters } from "./hooks/useFilters";
+import { useSearch } from "./hooks/useSearch";
 
 function App() {
   const [theme, setTheme] = useState<"light" | "dark">("light");
-  const [stateModal, setStateModal] = useState<boolean>(false);
-  const [stateRemoveNotification, setStateRemoveNotification] =
-    useState<boolean>(false);
-  const [tasks, setTasks] = useState<TaskType[]>(
-    getArray<TaskType>("Tasks") || []
-  );
-  const [removedId, setRemovedId] = useState<string[]>([]);
-  const [removedTasks, setRemovedTasks] = useState<TaskType[]>([]);
-  const [filter, setFilter] = useState("All");
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [shownModal, setShownModal] = useState<boolean>(false);
+  const {
+    tasks,
+    setTasks,
+    removedId,
+    removedTasks,
+    pushNewTask,
+    handleRemovedId,
+    undoRemove,
+    setRemovedTasks,
+    setRemovedId,
+  } = useTasks();
+  const { filter, filterHandler } = useFilters();
+  const { searchQuery, handleSearchChange } = useSearch();
 
   useEffect(() => {
     setRemovedId((prev) =>
@@ -40,46 +38,7 @@ function App() {
   };
 
   const changeStateModal = (): void => {
-    setStateModal(!stateModal);
-  };
-
-  const PushNewTask = (note: string, done = false): void => {
-    const updatedTasks = [...tasks, { id: uuidv4(), note: note, done: done }];
-    setTasks(updatedTasks);
-    saveArray("Tasks", updatedTasks);
-  };
-
-  const handleRemovedId = (handledId: string) => {
-    setRemovedId((prev) => {
-      if (!prev.includes(handledId)) {
-        return [...prev, handledId];
-      }
-      return prev;
-    });
-  };
-
-  const undoRemove = (id: string) => {
-    const taskToRestore = removedTasks.find((task) => task.id === id);
-    if (taskToRestore) {
-      if (!tasks.some((task) => task.id === id)) {
-        const restoredTasks = [...tasks, taskToRestore];
-        setTasks(restoredTasks);
-        saveArray("Tasks", restoredTasks);
-      }
-
-      setRemovedTasks((prev) => prev.filter((task) => task.id !== id));
-      setRemovedId((prev) => prev.filter((taskId) => taskId !== id));
-    }
-  };
-
-  const filterHandler = (
-    filterState: "All" | "Complete" | "Incomplete"
-  ): void => {
-    setFilter(filterState);
-  };
-
-  const handleSearchChange = (query: string): void => {
-    setSearchQuery(query.toLowerCase());
+    setShownModal(!shownModal);
   };
 
   useEffect(() => {
@@ -103,26 +62,20 @@ function App() {
           setTasks={setTasks}
           setRemovedTasks={setRemovedTasks}
           removedTasks={removedTasks}
-          setStateRemoveNotification={setStateRemoveNotification}
           handleRemovedId={handleRemovedId}
         />
 
-        <NewTaskButton
-          openAddTaskModal={() => {
-            changeStateModal();
-          }}
-        />
+        <NewTaskButton openAddTaskModal={changeStateModal} />
         <RemoveNotificationList
           removedList={removedId}
-          setIsVisible={setStateRemoveNotification}
           undoRemove={undoRemove}
           setRemovedId={setRemovedId}
         />
       </div>
       <NewTaskModal
-        isOpen={stateModal}
+        isOpen={shownModal}
         setIsOpen={changeStateModal}
-        pushTask={PushNewTask}
+        pushTask={pushNewTask}
       />
     </div>
   );

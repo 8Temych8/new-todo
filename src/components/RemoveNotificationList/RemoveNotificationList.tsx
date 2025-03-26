@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import RemoveNotification from "./components/RemoveNotification/RemoveNotification";
 import styles from "./RemoveNotificationList.module.scss";
 
 interface RemoveNotificationListProps {
   removedList: string[];
-  setIsVisible: (visible: boolean) => void;
   undoRemove: (id: string) => void;
   setRemovedId: React.Dispatch<React.SetStateAction<string[]>>;
 }
@@ -54,7 +53,7 @@ const RemoveNotificationList = ({
 
     setTimeout(() => {
       setRemovedId((prev) => prev.filter((taskId) => taskId !== id));
-    }, 1000);
+    }, 3000);
   };
 
   return (

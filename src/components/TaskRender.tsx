@@ -3,14 +3,28 @@ import Task from "./Task/Task";
 import saveArray from "../utils/saveArray";
 import EmptyTasks from "./EmptyTasks/EmptyTasks";
 
-const TaskRender = (props) => {
+interface TaskType {
+  id: string;
+  note: string;
+  done: boolean;
+}
+
+interface TaskRenderProps {
+  filter: "All" | "Complete" | "Incomplete";
+  tasks: TaskType[];
+  searchQuery: string;
+  setRemovedId: React.Dispatch<React.SetStateAction<string[]>>;
+  setTasks: React.Dispatch<React.SetStateAction<TaskType[]>>;
+  setRemovedTasks: React.Dispatch<React.SetStateAction<TaskType[]>>;
+  removedTasks: TaskType[];
+  handleRemovedId: (handledId: string) => void;
+}
+
+const TaskRender: React.FC<TaskRenderProps> = (props) => {
   const removeTask = (id: string) => {
     const taskToRemove = props.tasks.find((task) => task.id === id);
     if (taskToRemove) {
-      if (
-        props.removedTasks &&
-        !props.removedTasks.some((task) => task.id === id)
-      ) {
+      if (!props.removedTasks.some((task) => task.id === id)) {
         props.setRemovedTasks((prev) => [...prev, taskToRemove]);
       }
     }
@@ -18,7 +32,6 @@ const TaskRender = (props) => {
     const updatedTasks = props.tasks.filter((task) => task.id !== id);
     props.setTasks(updatedTasks);
     saveArray("Tasks", updatedTasks);
-    props.setStateRemoveNotification(true);
     props.handleRemovedId(id);
   };
 
@@ -45,7 +58,7 @@ const TaskRender = (props) => {
   );
 
   if (filteredTasks.length !== 0) {
-    return filteredTasks.map((item, index) => (
+    return filteredTasks.map((item: TaskType, index: number) => (
       <div key={item.id}>
         <Task
           id={item.id}

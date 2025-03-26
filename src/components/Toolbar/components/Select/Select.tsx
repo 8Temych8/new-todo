@@ -6,7 +6,7 @@ import chevronDown from "../../../../assets/chevron-down.svg";
 interface SelectProps {
   defaultValue: string;
   data: string[];
-  onSelectionChange: (selection: string) => void;
+  onSelectionChange: (selection: "All" | "Complete" | "Incomplete") => void;
 }
 
 const Select: React.FC<SelectProps> = ({
@@ -22,7 +22,9 @@ const Select: React.FC<SelectProps> = ({
     setChevronPath(shownDropdown ? chevronDown : chevronUp);
   };
 
-  const handleSelectionChange = (selection: string) => {
+  const handleSelectionChange = (
+    selection: "All" | "Complete" | "Incomplete"
+  ) => {
     setActiveSelection(selection);
     onSelectionChange(selection);
   };
@@ -48,7 +50,9 @@ const Select: React.FC<SelectProps> = ({
             key={index}
             className={styles.dropdown__item}
             onClick={() => {
-              handleSelectionChange(selection);
+              handleSelectionChange(
+                selection as "All" | "Complete" | "Incomplete"
+              );
               setShownDropdown(false);
               changeChevronPath();
             }}

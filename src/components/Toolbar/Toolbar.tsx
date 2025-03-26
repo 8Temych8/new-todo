@@ -4,7 +4,7 @@ import styles from "./Toolbar.module.scss";
 
 interface ToolbarProps {
   themeSwitcher: React.ReactNode;
-  filterHandler: (filterState: string) => void;
+  filterHandler: (filterState: "All" | "Complete" | "Incomplete") => void;
   onSearchChange: (query: string) => void;
 }
 

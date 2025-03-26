@@ -1,7 +1,7 @@
 import Select from "./Select/Select";
 
 interface DropDownListProps {
-  onFilterChange: (filterState: string) => void;
+  onFilterChange: (filterState: "All" | "Complete" | "Incomplete") => void;
 }
 
 const DropDownList: React.FC<DropDownListProps> = ({ onFilterChange }) => {
